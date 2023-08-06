@@ -2,7 +2,7 @@
   "name": "planos-api",
   "version": "1.0.0",
   "scripts": {
-    "app": "tsnd --respawn src/app.ts"
+    "app": "tsnd --respawn src/App.ts"
   },
   "dependencies": {
     "typescript": "^5.1.6"
