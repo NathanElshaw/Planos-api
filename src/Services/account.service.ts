@@ -7,7 +7,7 @@ const Account_Service = {
   Create_Account: async (account_Info: Account_Info_Document) => {
     try {
       await Account_Model.create(account_Info).then((response) => {
-        Email_Services.Send_Verification_Service(response);
+        Email_Services.Send_Verification(response);
       });
       return "Account Made";
     } catch (e: any) {
@@ -21,6 +21,18 @@ const Account_Service = {
       let code: string = crypto.randomInt(100000, 999999).toString();
       code = code.slice(0, 3) + "-" + code.slice(3, 6);
       return code;
+    } catch (e: any) {
+      return e;
+    }
+  },
+
+  Check_For_Code: async (target_id: string) => {
+    try {
+      const user: Account_Info_Document | null = await Account_Model.findById(
+        target_id
+      );
+      if (!user || user.code === "") return false;
+      return user.code;
     } catch (e: any) {
       return e;
     }
