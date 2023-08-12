@@ -4,7 +4,7 @@ import Email_Handler from "./Controllers/email.controller";
 import Spam_Prevent from "./MiddleWare/spamPrevent";
 
 const Routes = (app: Express) => {
-  app.get("/api", Spam_Prevent);
+  app.get("/api", Account_Handler.Create_Account);
 };
 
 export default Routes;
