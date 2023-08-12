@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 
 const Spam_Prevent = async (req: Request, res: Response) => {
   try {
-    return res.send(req);
+    //console.log(req.ips);
+    //return res.send();
   } catch (e: any) {
     console.log(e);
     return res.status(409).send(e);
