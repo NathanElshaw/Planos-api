@@ -25,7 +25,7 @@ const Account_Info_Schema = new mongoose.Schema(
     phone: { type: String, required: true },
     username: { type: String, required: true },
     password: { type: String, required: true },
-    code: { type: String, required: false },
+    code: { type: String, required: true },
     recieve_Updates: { type: Boolean, required: true },
     company_Info: {
       company_Name: { type: String, required: true },
