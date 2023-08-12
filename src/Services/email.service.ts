@@ -32,7 +32,10 @@ const Email_Services = {
       return e;
     }
   },
-  Resend_Verification: async (user_Info: Account_Info_Document) => {
+  Resend_Verification: async (
+    user_Info: Account_Info_Document,
+    code?: string
+  ) => {
     try {
       const Code_Check = await Account_Service.Check_For_Code(user_Info._id);
       if (Code_Check === false)
@@ -41,12 +44,16 @@ const Email_Services = {
         from: `"Planos" <${process.env.EMAIL}>`,
         to: `${user_Info.name} <${user_Info.email}>`,
         subject: "Planos Verification Code",
-        text: `${await Account_Service.Create_Verification_Code(
-          user_Info.email
-        )}`,
-        html: `<h1>${await Account_Service.Create_Verification_Code(
-          user_Info.email
-        )}</h1>`,
+        text: `${
+          !code
+            ? await Account_Service.Create_Verification_Code(user_Info.email)
+            : code
+        }`,
+        html: `<h1>${
+          !code
+            ? await Account_Service.Create_Verification_Code(user_Info.email)
+            : code
+        }</h1>`,
       });
       return;
     } catch (e: any) {
