@@ -6,11 +6,10 @@ import Email_Services from "./email.service";
 const Account_Service = {
   Create_Account: async (account_Info: Account_Info_Document) => {
     try {
-      await Account_Model.create(account_Info).then((response) => {
-        Email_Services.Send_Verification(response);
-      });
+      await Account_Model.create(account_Info);
       return "Account Made";
     } catch (e: any) {
+      console.error("Create Account Error:", e);
       return e;
     }
   },
@@ -33,6 +32,13 @@ const Account_Service = {
       );
       if (!user || user.code === "") return false;
       return user.code;
+    } catch (e: any) {
+      return e;
+    }
+  },
+  Delete_Account: async (target_email: string) => {
+    try {
+      return await Account_Model.deleteOne({ email: target_email });
     } catch (e: any) {
       return e;
     }
