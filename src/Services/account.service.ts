@@ -9,7 +9,6 @@ const Account_Service = {
       await Account_Model.create(account_Info);
       return "Account Made";
     } catch (e: any) {
-      console.error("Create Account Error:", e);
       return e;
     }
   },
@@ -19,6 +18,10 @@ const Account_Service = {
       (await Account_Model.findOne({ email: target_Email })) ? "Error" : "";
       let code: string = crypto.randomInt(100000, 999999).toString();
       code = code.slice(0, 3) + "-" + code.slice(3, 6);
+      await Account_Model.updateOne(
+        { email: { $regex: target_Email, $options: "i" } },
+        { code: Buffer.from(code, "ascii").toString("base64") }
+      );
       return code;
     } catch (e: any) {
       return e;
@@ -36,6 +39,24 @@ const Account_Service = {
       return e;
     }
   },
+
+  Verify_Code: async (target_Email: string, target_Code: string) => {
+    try {
+      let encoded_Code: string = Buffer.from(target_Code, "ascii").toString(
+        "base64"
+      );
+      const account: Account_Info_Document | null = await Account_Model.findOne(
+        { email: { $regex: target_Email, $options: "i" } }
+      ).lean();
+
+      if (!account) return "Account is invalid";
+      if (account.code === encoded_Code) return true;
+      else return false;
+    } catch (e: any) {
+      return e;
+    }
+  },
+
   Delete_Account: async (target_email: string) => {
     try {
       return await Account_Model.deleteOne({ email: target_email });
