@@ -13,21 +13,27 @@ const transporter = nodemailer.createTransport({
 });
 
 const Email_Services = {
-  Send_Verification: async (user_Info: Account_Info_Document) => {
+  Send_Verification: async (
+    user_Info: Account_Info_Document,
+    code?: string
+  ) => {
     try {
       const info = transporter.sendMail({
         from: `"Planos" <${process.env.EMAIL}>`,
         to: `${user_Info.name} <${user_Info.email}>`,
         subject: "Planos Verification Code",
-        text: `${await Account_Service.Create_Verification_Code(
-          user_Info.email
-        )}`,
-        html: `<h1>${await Account_Service.Create_Verification_Code(
-          user_Info.email
-        )}</h1>`,
+        text: `${
+          !code
+            ? await Account_Service.Create_Verification_Code(user_Info.email)
+            : code
+        }`,
+        html: `<h1>${
+          !code
+            ? await Account_Service.Create_Verification_Code(user_Info.email)
+            : code
+        }</h1>`,
       });
-      console.log("Message Sent: %s", (await info).messageId);
-      return;
+      return info;
     } catch (e: any) {
       return e;
     }
@@ -54,6 +60,20 @@ const Email_Services = {
             ? await Account_Service.Create_Verification_Code(user_Info.email)
             : code
         }</h1>`,
+      });
+      return info;
+    } catch (e: any) {
+      return e;
+    }
+  },
+  Send_SignUp_Thank_You: async (user_Info: Account_Info_Document) => {
+    try {
+      const info = transporter.sendMail({
+        from: `"Planos" <${process.env.EMAIL}>`,
+        to: `${user_Info.name} <${user_Info.email}>`,
+        subject: "Planos Verification Code",
+        text: `Thank you for signing up`,
+        html: `<h1>Thank you for signing up</h1>`,
       });
       return;
     } catch (e: any) {
