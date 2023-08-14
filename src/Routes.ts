@@ -5,7 +5,9 @@ import Spam_Prevent from "./MiddleWare/spamPrevent";
 import Signup_Check_Handler from "./Controllers/signup.error.controller";
 
 const Routes = (app: Express) => {
-  app.get("/api", Signup_Check_Handler, Account_Handler.Create_Account);
+  app.get("/api", Account_Handler.Create_Account);
+  app.get("/api/check", Signup_Check_Handler);
+  app.get("/api/verify_code", Account_Handler.Confirm_Code);
   app.delete("/api", Account_Handler.Delete_Account);
 };
 
