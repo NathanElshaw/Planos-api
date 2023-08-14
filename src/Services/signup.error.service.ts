@@ -4,9 +4,10 @@ const SignUp_Check_Service = {
   Check_Email: async (target_Email: string) => {
     try {
       const email = await Account_Model.findOne({
-        email: target_Email,
+        email: { $regex: target_Email, $options: "i" },
       });
-      return !email ? false : true;
+      console.log(email);
+      return !email ? false : "Email already exists";
     } catch (e: any) {
       return e;
     }
@@ -14,9 +15,9 @@ const SignUp_Check_Service = {
   Check_Username: async (target_Username: string) => {
     try {
       const username = await Account_Model.findOne({
-        username: target_Username,
+        username: { $regex: target_Username, $options: "i" },
       });
-      return !username ? false : true;
+      return !username ? false : "Username already exists!";
     } catch (e: any) {
       return e;
     }
