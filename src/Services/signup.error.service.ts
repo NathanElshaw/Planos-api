@@ -6,7 +6,6 @@ const SignUp_Check_Service = {
       const email = await Account_Model.findOne({
         email: { $regex: target_Email, $options: "i" },
       });
-      console.log(email);
       return !email ? false : "Email already exists";
     } catch (e: any) {
       return e;
