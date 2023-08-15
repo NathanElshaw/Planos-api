@@ -1,7 +1,5 @@
 import crypto from "crypto";
 import Account_Model, { Account_Info_Document } from "../Models/account.model";
-import { response } from "express";
-import Email_Services from "./email.service";
 
 const Account_Service = {
   Create_Account: async (account_Info: Account_Info_Document) => {
