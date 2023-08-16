@@ -13,7 +13,13 @@ const Api_Keys_Service = {
     }
   },
   Check: async () => {},
-  Delete: async () => {},
+  Delete: async (key_id: string) => {
+    try {
+      return await Key_Model.deleteOne({ _id: key_id });
+    } catch (e: any) {
+      return e;
+    }
+  },
 };
 
 export default Api_Keys_Service;
