@@ -24,12 +24,12 @@ export const Account_Handler = {
   },
   Confirm_Code: async (req: Request, res: Response) => {
     try {
-      const requesting: Account_Info_Document = req.body;
+      const requesting = req.query;
       const code_Check = await Account_Service.Verify_Code(
-        requesting.email,
+        requesting.email as string,
         requesting.code as string
       );
-      return res.send(code_Check === true ? true : "Invalid code");
+      return res.send(code_Check === true ? true : { error: "Invalid code" });
     } catch (e: any) {
       return res.status(409).send(e);
     }
