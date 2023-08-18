@@ -5,7 +5,9 @@ const Api_Keys_Handler = {
   Create_Key: async (req: Request, res: Response) => {
     try {
       const key = await Api_Keys_Service.Create();
-      return res.cookie("Api_Key", key, { httpOnly: true }).send();
+      return res
+        .cookie("Api_Key", key, { httpOnly: true, maxAge: 15000 })
+        .send();
     } catch (e: any) {
       return res.status(409).send(e);
     }
