@@ -6,7 +6,7 @@ const SignUp_Check_Service = {
       const email = await Account_Model.findOne({
         email: { $regex: target_Email, $options: "i" },
       });
-      return !email ? false : "Email already exists";
+      return !email ? false : { error: "Email already exists" };
     } catch (e: any) {
       return e;
     }
@@ -16,7 +16,7 @@ const SignUp_Check_Service = {
       const username = await Account_Model.findOne({
         username: { $regex: target_Username, $options: "i" },
       });
-      return !username ? false : "Username already exists!";
+      return !username ? false : { error: "Username already exists!" };
     } catch (e: any) {
       return e;
     }
