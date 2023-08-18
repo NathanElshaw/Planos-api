@@ -7,7 +7,7 @@ export interface Account_Info_Document extends mongoose.Document {
   username: string;
   password: string;
   code: string | null;
-  recieve_Updates: boolean;
+  receive_Updates: boolean;
   company_Info: {
     company_Name: string;
     company_Sector: string;
@@ -26,7 +26,7 @@ const Account_Info_Schema = new mongoose.Schema(
     username: { type: String, required: true },
     password: { type: String, required: true },
     code: { type: String || null, required: false },
-    recieve_Updates: { type: Boolean, required: true },
+    receive_Updates: { type: Boolean, required: true },
     company_Info: {
       company_Name: { type: String, required: true },
       company_Sector: { type: String, required: true },
