@@ -21,6 +21,16 @@ const SignUp_Check_Service = {
       return e;
     }
   },
+  Check_Phone: async (target_Phone: string) => {
+    try {
+      const phone = await Account_Model.findOne({
+        phone: { $regex: target_Phone, $options: "i" },
+      });
+      return !phone ? false : { error: "Phone number already exists!" };
+    } catch (e: any) {
+      return e;
+    }
+  },
 };
 
 export default SignUp_Check_Service;
