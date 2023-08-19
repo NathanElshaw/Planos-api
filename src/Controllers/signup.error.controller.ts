@@ -13,6 +13,8 @@ const Signup_Check_Handler = async (req: Request, res: Response) => {
             req.query.username as string
           )
         )
+      : req.query.phone
+      ? res.send(SignUp_Check_Service.Check_Phone(req.query.phone as string))
       : res.status(404).send("Check Failed");
   } catch (e: any) {
     return res.status(409).send(e);
