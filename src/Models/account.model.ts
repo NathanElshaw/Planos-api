@@ -7,6 +7,7 @@ export interface Account_Info_Document extends mongoose.Document {
   username: string;
   password: string;
   code: string | null;
+  isVerified: boolean;
   receive_Updates: boolean;
   company_Info: {
     company_Name: string;
@@ -25,6 +26,7 @@ const Account_Info_Schema = new mongoose.Schema(
     phone: { type: String, required: true },
     username: { type: String, required: true },
     password: { type: String, required: true },
+    isVerified: { type: Boolean, required: true },
     code: { type: String || null, required: false },
     receive_Updates: { type: Boolean, required: true },
     company_Info: {
