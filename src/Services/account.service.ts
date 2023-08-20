@@ -48,8 +48,16 @@ const Account_Service = {
       ).lean();
 
       if (!account) return "Account is invalid";
-      if (account.code === encoded_Code) return true;
-      else return false;
+
+      if (account.code === encoded_Code) {
+        await Account_Model.updateOne(
+          {
+            email: { $regex: target_Email, $options: "i" },
+          },
+          { isVerified: true, code: "" }
+        );
+        return true;
+      } else return false;
     } catch (e: any) {
       return e;
     }
