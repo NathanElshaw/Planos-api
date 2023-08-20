@@ -9,6 +9,7 @@ export const Account_Handler = {
       Object.assign(
         req.body,
         { code: "" },
+        { isVerified: false },
         { password: Buffer.from(req.body.password, "ascii").toString("base64") }
       );
       return res.send(
