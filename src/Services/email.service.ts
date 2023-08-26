@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import "dotenv/config";
-import { Request, Response } from "express";
 import Account_Service from "./account.service";
 import { Account_Info_Document } from "../Models/account.model";
 
