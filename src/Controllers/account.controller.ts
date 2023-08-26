@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Account_Service from "../Services/account.service";
 import Email_Services from "../Services/email.service";
-import { Account_Info_Document } from "../Models/account.model";
 
 export const Account_Handler = {
   Create_Account: async (req: Request, res: Response) => {
@@ -13,11 +12,9 @@ export const Account_Handler = {
         { password: Buffer.from(req.body.password, "ascii").toString("base64") }
       );
       return res.send(
-        await Account_Service.Create_Account(req.body).then(
-          async (response) => {
-            await Email_Services.Send_Verification(req.body);
-          }
-        )
+        await Account_Service.Create_Account(req.body).then(async () => {
+          await Email_Services.Send_Verification(req.body);
+        })
       );
     } catch (e: any) {
       return res.status(409).send(e);
